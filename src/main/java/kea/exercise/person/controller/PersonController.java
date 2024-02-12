@@ -14,8 +14,12 @@ import java.util.List;
 @RestController
 public class PersonController {
 
-    @Autowired
-    private PersonRepository personRepository;
+
+    private final PersonRepository personRepository;
+
+    public PersonController(PersonRepository personRepository){
+        this.personRepository = personRepository;
+    }
 
     @GetMapping("/persons")
     public List<Person> getAllPersons(){
