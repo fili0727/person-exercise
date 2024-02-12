@@ -72,4 +72,22 @@ public class PersonController {
 
     }
 
+    @PutMapping("/persons/{id}")
+    public ResponseEntity<Person> updatePerson(@PathVariable int id, @RequestBody Person person){
+        Optional<Person> original = personRepository.findById(id);
+        if(original.isPresent()){
+            Person originalPerson = original.get();
+            //update OP
+            originalPerson.setFirstName(person.getFirstName());
+            originalPerson.setLastName(person.getLastName());
+            originalPerson.setDateOfBirth(person.getDateOfBirth());
+            Person updatedPerson = personRepository.save(originalPerson);
+            return ResponseEntity.ok().body(updatedPerson);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    
+
 }
